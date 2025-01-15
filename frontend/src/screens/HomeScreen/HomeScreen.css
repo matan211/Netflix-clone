@@ -2,6 +2,23 @@
     background-color: #141414;
     color: #fff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    padding-top: 60px;
+    /* Ensure content is not hidden behind the fixed navbar */
+}
+
+.search-message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+    /* Adjust height to fill the screen minus the navbar */
+    background-color: #141414;
+}
+
+.search-message {
+    font-size: 1.5rem;
+    color: #fff;
 }
 
 .banner {

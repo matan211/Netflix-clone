@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../../components/NavBar'; // Import the NavBar component
+import { useAuth } from '../../context/AuthContext'; // Import the AuthContext
 import './HomeScreen.css'; // Import the CSS file
 
 function HomeScreen() {
@@ -8,31 +9,19 @@ function HomeScreen() {
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [searchMessage, setSearchMessage] = useState('');
+  const { token } = useAuth();
   const userId = 7;
 
-  useEffect(() => {
-    fetchMovies();
-  }, [userId]);
+  const fetchMovies = useCallback((searchResults = null) => {
+    const url = searchResults
+      ? `http://localhost:8080/movies/search/${searchResults}`
+      : `http://localhost:8080/movies?userId=${userId}`;
 
-  const fetchMovies = (searchResults = null) => {
-    if (searchResults !== null) {
-      if (searchResults.length === 0) {
-        setSearchMessage('No movies found for the search term.');
-        setCategories({});
-        setRandomMovie(null);
-      } else {
-        setSearchMessage('');
-        setCategories({ 'Search Results': searchResults });
-        const allMovies = searchResults;
-        setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
-      }
-      return;
-    }
-
-    fetch(`http://localhost:8080/movies?userId=${userId}`, {
+    fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     })
       .then(response => {
@@ -42,15 +31,31 @@ function HomeScreen() {
         return response.json();
       })
       .then(data => {
-        setCategories(data);
-        const allMovies = Object.values(data).flat();
-        setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
+        if (searchResults !== null) {
+          if (data.length === 0) {
+            setSearchMessage('No movies found for the search term.');
+            setCategories({});
+            setRandomMovie(null);
+          } else {
+            setSearchMessage('');
+            setCategories({ 'Search Results': data });
+            setRandomMovie(data[Math.floor(Math.random() * data.length)]);
+          }
+        } else {
+          setCategories(data);
+          const allMovies = Object.values(data).flat();
+          setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
+        }
       })
       .catch(error => {
         console.error('Error fetching movies:', error);
         setError(error.message);
       });
-  };
+  }, [token, userId]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
 
   const handleSearch = (searchResults) => {
     fetchMovies(searchResults);
@@ -71,7 +76,11 @@ function HomeScreen() {
   return (
     <div className="home-screen">
       <NavBar onSearch={handleSearch} /> {/* Include the NavBar component */}
-      {searchMessage && <div className="search-message">{searchMessage}</div>}
+      {searchMessage && (
+        <div className="search-message-container">
+          <div className="search-message">{searchMessage}</div>
+        </div>
+      )}
       {randomMovie && (
         <div className="banner" style={{ backgroundImage: `url(${randomMovie.poster})` }}>
           <div className="banner-contents">

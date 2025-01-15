@@ -37,10 +37,22 @@
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.nav-avatar-container:hover .nav-avatar-bubble {
+.nav-avatar-bubble.visible {
     display: block;
+    opacity: 1;
+}
+
+.logout-link {
+    cursor: pointer;
+    color: #e50914;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
 }
 
 .nav-search {

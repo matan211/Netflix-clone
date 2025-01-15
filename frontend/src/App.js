@@ -6,15 +6,15 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginScreen />} />
-          <Route path="/home" element={<ProtectedRoute element={HomeScreen} />} />
+          <Route path="/" element={<ProtectedRoute element={HomeScreen} />} />
           {/* other routes */}
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
