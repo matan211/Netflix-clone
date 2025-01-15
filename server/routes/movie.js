@@ -6,7 +6,7 @@ router.route('/')
     .post(movieController.createMovie) // Use POST to create a movie
     .get(movieController.getMoviesByCategories); // Use GET to get movies by categories
 
-router.route('/search/:name')
+router.route('/search/:query') // Search query
     .get(movieController.searchMovies);
 
 router.route('/:id') // Movie ID

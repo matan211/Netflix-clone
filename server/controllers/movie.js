@@ -86,16 +86,17 @@ const createMovie = async (req, res) => {
 
 const getMoviesByCategories = async (req, res) => {
     try {
-        console.log("getMoviesByCategories: " + req.body.userId);
-        const allMovies = await movieService.getMoviesByCategories(req.body.userId);
+        const userId = req.query.userId;
+        console.log("getMoviesByCategories: " + userId);
+        const allMovies = await movieService.getMoviesByCategories(userId);
         if (!allMovies) {
-          return res.status(404).send("there are no avaliable movies");
+          return res.status(404).send("There are no available movies");
         }
         return res.status(200).json(allMovies); 
     }
     catch (error) {
-        console.log("Error getting movies by categories: " + error);
-        return res.status(500).send("Internal server error");
+        console.error('Error retrieving movies by categories:', error); // Log the error for debugging
+        return res.status(500).send('Internal Server Error.'); // 500 Internal Server Error
     }
 };
 

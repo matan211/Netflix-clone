@@ -237,6 +237,8 @@ const deleteMovieInRecommendationSys = async (userId, movieId) => {
 // Function to search for movies by name
 const searchMovies = async (name) => {
     try {
+        console.log("Searching for movies with name: " + name);
+        console.log("Type of name: " + typeof name);
         if (!name || typeof name !== 'string') {
             throw new Error('Search term must be a string'); // Validate search term
         }
