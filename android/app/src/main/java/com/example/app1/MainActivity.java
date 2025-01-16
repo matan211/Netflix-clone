@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity {
         passwordInput.setBackgroundColor(Color.parseColor("#1F1F1F"));
         passwordInput.setPadding(20, 20, 20, 20);
         passwordInput.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         rootLayout.addView(passwordInput);
 
         // Login Button
@@ -77,7 +78,6 @@ public class MainActivity extends Activity {
             }
         });
         rootLayout.addView(loginButton);
-
         setContentView(R.layout.activity_loginactivity);
     }
 }
