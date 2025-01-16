@@ -2,6 +2,7 @@ package com.example.app1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +15,16 @@ import android.util.TypedValue;
 // this is login screen
 public class MainActivity extends Activity {
 
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize MediaPlayer with your audio file
+        mediaPlayer = MediaPlayer.create(this, R.raw.song1);
+        mediaPlayer.setLooping(true); // Set looping repeat
+        mediaPlayer.start(); // Start playback
 
         // Set up the root layout
         LinearLayout rootLayout = new LinearLayout(this);
