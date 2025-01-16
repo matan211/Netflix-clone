@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.graphics.Color;
 import android.util.TypedValue;
 
-public class LoginActivity extends Activity {
+// this is login screen
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +26,8 @@ public class LoginActivity extends Activity {
 
         // App Title
         TextView appTitle = new TextView(this);
-        appTitle.setText("MovieMania");
-        appTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
+        appTitle.setText("MitkademFlix");
+        appTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 42);
         appTitle.setTextColor(Color.WHITE);
         appTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         rootLayout.addView(appTitle);
@@ -55,7 +56,7 @@ public class LoginActivity extends Activity {
         // Login Button
         Button loginButton = new Button(this);
         loginButton.setText("Log In");
-        loginButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        loginButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         loginButton.setBackgroundColor(Color.parseColor("#E50914"));
         loginButton.setTextColor(Color.WHITE);
         loginButton.setPadding(20, 20, 20, 20);
@@ -63,12 +64,12 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // Simulate login and navigate to Home Screen
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
         rootLayout.addView(loginButton);
 
-        setContentView(rootLayout);
+        setContentView(R.layout.activity_loginactivity);
     }
 }

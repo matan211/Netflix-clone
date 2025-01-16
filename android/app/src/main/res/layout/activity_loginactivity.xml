@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-// activity_LoginActivity.xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/background_dark">
+    android:background="@drawable/loginbackground">
 
-    <TextView
+<TextView
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MovieMania"
+        android:text="MitkademFlix"
         android:textColor="@color/white"
-        android:textSize="32sp"
+        android:textSize="36sp"
         android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/usernameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:hintTextColor="@color/hint_gray"
-        android:textColor="@color/white"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/input_background"
+        android:hint="Email"
         android:padding="16dp"
-        android:layout_marginBottom="16dp" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_gray" />
 
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:hintTextColor="@color/hint_gray"
-        android:textColor="@color/white"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/input_background"
-        android:padding="16dp"
+        android:hint="Password"
         android:inputType="textPassword"
-        android:layout_marginBottom="24dp" />
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_gray" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#3F2ED5"
+        android:padding="10dp"
         android:text="Log In"
-        android:textSize="18sp"
-        android:background="@color/red_accent"
-        android:textColor="@color/white"
-        android:padding="16dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="22sp" />
 
 </LinearLayout>
