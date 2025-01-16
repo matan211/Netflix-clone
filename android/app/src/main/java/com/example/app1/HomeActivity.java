@@ -25,7 +25,7 @@ public class HomeActivity extends Activity {
 
         // App Title
         TextView appTitle = new TextView(this);
-        appTitle.setText("Welcome to MovieMania");
+        appTitle.setText("Welcome to MitkademFlix");
         appTitle.setTextSize(24);
         appTitle.setTextColor(Color.WHITE);
         appTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

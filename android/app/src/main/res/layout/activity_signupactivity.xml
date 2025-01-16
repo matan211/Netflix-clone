@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:paddingLeft="50dp"
+    android:paddingTop="100dp"
+    android:paddingRight="50dp"
+    android:paddingBottom="100dp">
+
+    <!-- App Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MitkademFlix - Sign Up"
+        android:textSize="42sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
+
+    <!-- Username Field -->
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:textColor="#FFFFFF"
+        android:background="#1F1F1F"
+        android:padding="20dp"
+        android:textSize="18sp"
+        />
+
+    <!-- Email Field -->
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColor="#FFFFFF"
+        android:background="#1F1F1F"
+        android:padding="20dp"
+        android:textSize="18sp"
+        />
+
+    <!-- Password Field -->
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textColor="#FFFFFF"
+        android:background="#1F1F1F"
+        android:padding="20dp"
+        android:textSize="18sp"
+        android:inputType="textPassword"
+        />
+
+    <!-- Repeat Password Field -->
+    <EditText
+        android:id="@+id/repeatPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Repeat Password"
+        android:textColor="#FFFFFF"
+        android:background="#1F1F1F"
+        android:padding="20dp"
+        android:textSize="18sp"
+        android:inputType="textPassword"
+        />
+
+    <!-- Profile Picture Placeholder -->
+    <ImageView
+        android:id="@+id/profilePicture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_profile_picture_placeholder"/>
+
+    <!-- Terms and Conditions Checkbox -->
+    <CheckBox
+        android:id="@+id/termsCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I agree to the terms and conditions of MitkademFlix"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Sign Up Button -->
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="24sp"
+        android:background="#E50914"
+        android:textColor="#FFFFFF"
+        android:padding="20dp"/>
+
+</LinearLayout>
