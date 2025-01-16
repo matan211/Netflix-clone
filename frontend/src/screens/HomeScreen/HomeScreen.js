@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar'; // Import the NavBar component
 import { useAuth } from '../../context/AuthContext'; // Import the AuthContext
 import './HomeScreen.css'; // Import the CSS file
@@ -9,13 +10,26 @@ function HomeScreen() {
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [searchMessage, setSearchMessage] = useState('');
-  const { token } = useAuth();
-  const userId = 7;
+  const [selectedMovie, setSelectedMovie] = useState(null); // State for the selected movie
+  const { token, userId } = useAuth();
+  const navigate = useNavigate();
 
   const fetchMovies = useCallback((searchResults = null) => {
-    const url = searchResults
-      ? `http://localhost:8080/movies/search/${searchResults}`
-      : `http://localhost:8080/movies?userId=${userId}`;
+    if (searchResults !== null) {
+      if (searchResults.length === 0) {
+        setSearchMessage('No movies found for the search term.');
+        setCategories({});
+        setRandomMovie(null);
+      } else {
+        setSearchMessage('');
+        setCategories({ 'Search Results': searchResults });
+        setRandomMovie(searchResults[Math.floor(Math.random() * searchResults.length)]);
+      }
+      return;
+    }
+
+    const url = `http://localhost:8080/movies?userId=${userId}`;
+    console.log(url);
 
     fetch(url, {
       method: 'GET',
@@ -31,21 +45,9 @@ function HomeScreen() {
         return response.json();
       })
       .then(data => {
-        if (searchResults !== null) {
-          if (data.length === 0) {
-            setSearchMessage('No movies found for the search term.');
-            setCategories({});
-            setRandomMovie(null);
-          } else {
-            setSearchMessage('');
-            setCategories({ 'Search Results': data });
-            setRandomMovie(data[Math.floor(Math.random() * data.length)]);
-          }
-        } else {
-          setCategories(data);
-          const allMovies = Object.values(data).flat();
-          setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
-        }
+        setCategories(data);
+        const allMovies = Object.values(data).flat();
+        setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
       })
       .catch(error => {
         console.error('Error fetching movies:', error);
@@ -69,8 +71,20 @@ function HomeScreen() {
     setPreview(null);
   };
 
+  const handleThumbnailClick = (movie) => {
+    setSelectedMovie(movie);
+  };
+
+  const handleCloseBubble = () => {
+    setSelectedMovie(null);
+  };
+
+  const handlePlayClick = (movieId) => {
+    navigate(`/movies/${movieId}`);
+  };
+
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error-message">Error: {error}</div>;
   }
 
   return (
@@ -104,6 +118,7 @@ function HomeScreen() {
                     className="thumbnail-container"
                     onMouseEnter={() => handleMouseEnter(movie._id)}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleThumbnailClick(movie)}
                   >
                     <img
                       src={`https://img.youtube.com/vi/${movie.trailer.split('v=')[1]}/0.jpg`}
@@ -130,6 +145,33 @@ function HomeScreen() {
           </div>
         )
       ))}
+      {selectedMovie && (
+        <div className="movie-bubble">
+          <div className="movie-bubble-content">
+            <button className="close-button" onClick={handleCloseBubble}>X</button>
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${selectedMovie.trailer.split('v=')[1]}?autoplay=1&mute=1`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="video preview"
+            ></iframe>
+            <div className="movie-info">
+              <h2>{selectedMovie.name}</h2>
+              <p>{selectedMovie.description}</p>
+              <p><strong>Year:</strong> {selectedMovie.year}</p>
+              <p><strong>Director:</strong> {selectedMovie.director}</p>
+              <p><strong>Genre:</strong> {selectedMovie.genre}</p>
+              <p><strong>Rating:</strong> {selectedMovie.rating}</p>
+              <p><strong>Length:</strong> {selectedMovie.length} minutes</p>
+              <p><strong>Age Restriction:</strong> {selectedMovie.ageRestriction}+</p>
+              <button className="play-button" onClick={() => handlePlayClick(selectedMovie._id)}>Play</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

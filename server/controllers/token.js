@@ -26,6 +26,7 @@ async function login(req, res) {
 
     // Generate a JWT token for the authenticated user
     const token = authService.generateToken(user.mail);
+    console.log(token);
 
     // Return success response with token and user details
     return res.status(200).json({

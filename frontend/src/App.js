@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
+import MovieScreen from './screens/MovieScreen/MovieScreen';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/" element={<ProtectedRoute element={HomeScreen} />} />
+          <Route path="/movies/:id" element={<ProtectedRoute element={MovieScreen} />} />
           {/* other routes */}
         </Routes>
       </AuthProvider>

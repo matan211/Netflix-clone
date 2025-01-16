@@ -4,13 +4,13 @@ import './LoginScreen.css'; // Import the CSS file
 
 const LoginScreen = () => {
   const { login } = useAuth();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login(username, password);
+    login(email, password);
   };
 
   const togglePasswordVisibility = () => {
@@ -22,10 +22,10 @@ const LoginScreen = () => {
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <div className="password-container">
           <input
@@ -38,10 +38,7 @@ const LoginScreen = () => {
             {showPassword ? 'Hide' : 'Show'}
           </button>
         </div>
-        <button type="submit" onSubmit={async (event) => {
-          event.preventDefault();
-          login(username, password);
-        }}>Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );

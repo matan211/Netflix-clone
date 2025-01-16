@@ -11,7 +11,7 @@ const NavBar = ({ onSearch }) => {
   const [isBubbleVisible, setIsBubbleVisible] = useState(false);
 
   const handleLogoClick = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   const handleLogout = () => {

@@ -98,11 +98,8 @@ const getMoviesByCategories = async (userId) => {
         result['watched'] = allMovies.filter(movie => 
             user.watchedMovies.some(watchedMovie => watchedMovie.movieId == (movie._id)));
         
-        console.log(result['watched']);
-        console.log(user.watchedMovies);
         // Sort watched movies by watched date
         result['watched'].sort((a, b) => {
-            console.log("a: ", a);
     const aWatchedMovie = user.watchedMovies.find(watchedMovie => watchedMovie.movieId == a._id);
     const bWatchedMovie = user.watchedMovies.find(watchedMovie => watchedMovie.movieId == b._id);
 
@@ -113,9 +110,6 @@ const getMoviesByCategories = async (userId) => {
 
     const aDate = aWatchedMovie.watchedAt;
     const bDate = bWatchedMovie.watchedAt;
-
-    console.log("aDate: ", aDate);
-    console.log("bDate: ", bDate);
 
     return bDate - aDate;
         });
