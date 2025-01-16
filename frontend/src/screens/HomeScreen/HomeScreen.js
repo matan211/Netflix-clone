@@ -80,6 +80,7 @@ function HomeScreen() {
   };
 
   const handlePlayClick = (movieId) => {
+    console.log('Play movie:', movieId);
     navigate(`/movies/${movieId}`);
   };
 
