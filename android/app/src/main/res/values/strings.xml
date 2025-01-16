@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Welcome to the Cool App!</string>
+    <string name="foo">Awesome</string>
+    <string name="bar">Superb</string>
+    <string name="foobar">Mind-blowing!</string>
+    <string name="greeting" translatable="false">Hello, Cool Explorer!</string>
+</resources>
