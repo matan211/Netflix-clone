@@ -1,58 +1,39 @@
-// Creating a schematic structure for each film according to guidelines
 const mongoose = require('mongoose');
-const Counter = require('./counter');
 
-const Schema = mongoose.Schema;
-
-// Define the schema for the "Movie" collection
-const MovieSchema = new Schema({
-  _id: {
-    type: Number 
-  },
+const movieSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
-  },
-  year: {
-    // Year the movie was released (defaults to the current year)
-    type: Number, 
-    default: () => new Date().getFullYear()
-  },
-  director: {
-    // Director of the movie defaults to "Unknown" if not provided
-    type: String,
-    default: 'Unknown'
-  },
-  genre: {
-    type: String,
-    required: true
-  },
-  rating: {
-    // Rating of the movie (defaults to null)
-    type: Number, 
-    default: null
+    required: true,
   },
   description: {
     type: String,
-    default: '' 
+    required: true,
   },
-  poster: {
-    // URL of the movie poster
-    type: String, 
-    default: '' 
+  year: {
+    type: Number,
+    required: true,
+  },
+  director: {
+    type: String,
+    required: true,
+  },
+  genre: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
   },
   trailer: {
-    // URL of the movie trailer
-    type: String, 
-    default: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' // Default trailer link
+    type: String,
+    default: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Default trailer link
   },
   length: {
-    // Movie's length in minutes
     type: Number,
-    default: 0
+    default: 0,
   },
-  ageRestriction : {
-    // Movie's age restriction
+  ageRestriction: {
     type: Number,
     default: 0
   },
