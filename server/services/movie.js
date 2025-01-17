@@ -39,6 +39,7 @@ const getAllMovies = async () => {
     try {
         // Fetch all movies from the database
         const movies = await MovieSchema.find();
+        console.log(movies);
         return movies;
     } catch (error) {
         console.log("Error getting movies: " + error);

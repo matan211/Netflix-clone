@@ -4,6 +4,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen';
 import MovieScreen from './screens/MovieScreen/MovieScreen';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import ManagementScreen from './screens/ManagementScreen/ManagementScreen';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/" element={<ProtectedRoute element={HomeScreen} />} />
           <Route path="/movies/:id" element={<ProtectedRoute element={MovieScreen} />} />
+          <Route path='/admin' element={<ProtectedRoute element={ManagementScreen} />} />
           {/* other routes */}
         </Routes>
       </AuthProvider>

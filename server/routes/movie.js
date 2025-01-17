@@ -9,6 +9,9 @@ router.route('/')
 router.route('/search/:query') // Search query
     .get(movieController.searchMovies);
 
+router.route('/all') 
+    .get(movieController.getAllMovies);
+
 router.route('/:id') // Movie ID
     .get(movieController.getMovieById)
     .put(movieController.updateMovie)

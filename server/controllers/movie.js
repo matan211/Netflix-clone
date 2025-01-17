@@ -45,6 +45,7 @@ const createMovie = async (req, res) => {
   
   const getAllMovies = async (req, res) => {
     try {
+      console.log("reached getAllMovies");
       // Retrieve all movies using the service
       const movies = await movieService.getAllMovies();
   
