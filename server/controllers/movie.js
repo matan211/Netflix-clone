@@ -140,7 +140,9 @@ const searchMovies = async (req, res) => {
 
 const getRecommendedMovies = async (req, res) => {
     try{
-        const recommendedMovies = await movieService.getRecommendedMovies(req.body.userId, req.params.id);
+        const id = req.params.id;
+        const userId = req.query.userId;
+        const recommendedMovies = await movieService.getRecommendedMovies(userId, id);
         if (!recommendedMovies || recommendedMovies.length === 0) {
             return res.status(404).send("No movies found");
         }

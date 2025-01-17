@@ -60,6 +60,8 @@
 
 .movie-details {
     padding: 20px;
+    margin-top: 20px;
+    background-color: #000;
 }
 
 .movie-details h2 {
@@ -70,4 +72,16 @@
 .movie-details p {
     font-size: 1.2rem;
     margin-bottom: 10px;
+}
+
+.movie-player {
+    padding: 20px;
+}
+
+.recommended-movie-item {
+    color: black
+}
+
+.recommended-movies {
+    color: black
 }

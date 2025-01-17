@@ -55,6 +55,10 @@ const MovieSchema = new Schema({
     // Movie's age restriction
     type: Number,
     default: 0
+  },
+  filename: {
+    type: String,
+    required: true
   }
 });
 

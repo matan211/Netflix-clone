@@ -74,6 +74,7 @@ const getMoviesByCategories = async (userId) => {
 
         // Fetch all movies and promoted categories
         const allMovies = await MovieSchema.find();
+        console.log(allMovies);
         const categories = await CategorySchema.find({ promoted: true });
         const result = {};
 

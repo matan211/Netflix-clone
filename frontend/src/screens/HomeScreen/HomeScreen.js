@@ -72,14 +72,20 @@ function HomeScreen() {
   };
 
   const handleThumbnailClick = (movie) => {
+    console.log(movie);
     setSelectedMovie(movie);
   };
+
+  useEffect(() => {
+    console.log("selected", selectedMovie);
+  }, [selectedMovie]);
 
   const handleCloseBubble = () => {
     setSelectedMovie(null);
   };
 
   const handlePlayClick = (movieId) => {
+    console.log('Play movie:', movieId);
     navigate(`/movies/${movieId}`);
   };
 
