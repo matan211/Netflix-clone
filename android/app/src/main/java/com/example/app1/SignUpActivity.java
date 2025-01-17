@@ -1,7 +1,6 @@
 package com.example.app1;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -14,10 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 // This is the Sign Up screen
-public class SignUpActivity extends Activity {
+public class SignupActivity extends Activity {
 
     private MediaPlayer mediaPlayer;
 
@@ -26,7 +24,7 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // Initialize MediaPlayer with your audio file
-        mediaPlayer = MediaPlayer.create(this, R.raw.song1);
+        mediaPlayer = MediaPlayer.create(this, R.raw.song2);
         mediaPlayer.setLooping(true); // Set looping repeat
         mediaPlayer.start(); // Start playback
 
@@ -112,21 +110,19 @@ public class SignUpActivity extends Activity {
                 // Validate the fields before proceeding
                 if (usernameInput.getText().toString().isEmpty() || emailInput.getText().toString().isEmpty() ||
                         passwordInput.getText().toString().isEmpty() || repeatPasswordInput.getText().toString().isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!passwordInput.getText().toString().equals(repeatPasswordInput.getText().toString())) {
-                    Toast.makeText(SignUpActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!termsCheckbox.isChecked()) {
-                    Toast.makeText(SignUpActivity.this, "You must agree to the terms and conditions.", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, "You must agree to the terms and conditions.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // Proceed with sign-up (for now, just simulate it by navigating to MainActivity)
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                startActivity(intent);
+                // Proceed with sign-up (for now, just simulate it by finishing the activity)
                 finish();
             }
         });

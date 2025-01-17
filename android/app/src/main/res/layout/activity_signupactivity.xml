@@ -1,100 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#121212"
-    android:paddingLeft="50dp"
-    android:paddingTop="100dp"
-    android:paddingRight="50dp"
-    android:paddingBottom="100dp">
+    android:padding="24dp"
+    android:background="@drawable/signupbackground">
 
-    <!-- App Title -->
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MitkademFlix - Sign Up"
         android:textSize="42sp"
         android:textColor="#FFFFFF"
         android:layout_gravity="center"
         android:textAlignment="center"/>
 
-    <!-- Username Field -->
     <EditText
         android:id="@+id/usernameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#B85CD042"
         android:hint="Username"
-        android:textColor="#FFFFFF"
-        android:background="#1F1F1F"
-        android:padding="20dp"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#FFFDFD"
+        android:textColorHint="#EDEFEE"
         />
 
-    <!-- Email Field -->
     <EditText
         android:id="@+id/emailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#8B4D4747"
         android:hint="Email"
-        android:textColor="#FFFFFF"
-        android:background="#1F1F1F"
-        android:padding="20dp"
-        android:textSize="18sp"
+        android:padding="5dp"
+        android:textSize="30sp"
+        android:textColor="#F6F6F6"
+        android:textColorHint="#FFFDFD"
         />
 
-    <!-- Password Field -->
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#8B4D4747"
         android:hint="Password"
-        android:textColor="#FFFFFF"
-        android:background="#1F1F1F"
-        android:padding="20dp"
-        android:textSize="18sp"
         android:inputType="textPassword"
+        android:padding="3dp"
+        android:textSize="28sp"
+        android:textColor="#F6F6F6"
+        android:textColorHint="#DFFEFE"
         />
 
-    <!-- Repeat Password Field -->
     <EditText
-        android:id="@+id/repeatPasswordInput"
+        android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#8B4D4747"
         android:hint="Repeat Password"
-        android:textColor="#FFFFFF"
-        android:background="#1F1F1F"
-        android:padding="20dp"
-        android:textSize="18sp"
         android:inputType="textPassword"
-        />
+        android:padding="3dp"
+        android:textSize="28sp"
+        android:textColor="#F6F6F6"
+        android:textColorHint="#FFFDFD"
+        tools:ignore="DuplicateIds" />
 
-    <!-- Profile Picture Placeholder -->
-    <ImageView
-        android:id="@+id/profilePicture"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <Button
+        android:id="@+id/addPictureButton"
+        android:layout_width="145sp"
+        android:layout_height="wrap_content"
+        android:text="Add Picture"
+        android:textSize="26sp"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_profile_picture_placeholder"/>
+        android:background="#BC475272"
+        android:textColor="#FFFFFF"
+        android:padding="20dp"
+        android:layout_marginBottom="20dp"/>
 
-    <!-- Terms and Conditions Checkbox -->
     <CheckBox
         android:id="@+id/termsCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I agree to the terms and conditions of MitkademFlix"
+        android:textSize="18sp"
+        android:text="I have read and agree to the terms and conditions"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="30dp"/>
 
-    <!-- Sign Up Button -->
     <Button
         android:id="@+id/signUpButton"
-        android:layout_width="match_parent"
+        android:layout_width="180sp"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:textSize="34sp"
         android:background="#E50914"
         android:textColor="#FFFFFF"
         android:padding="20dp"/>

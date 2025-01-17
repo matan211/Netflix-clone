@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // Navigate to Sign Up Activity
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
