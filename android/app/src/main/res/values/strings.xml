@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">MitkademFlix</string>
-    <string name="foo">Awesome</string>
-    <string name="bar">Superb</string>
-    <string name="foobar">Mind-blowing!</string>
-    <string name="greeting" translatable="false">Hello, Cool Explorer!</string>
+    <string name="navigation_drawer_open" translatable="false">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close Navigation Drawer</string>
 </resources>
+
+
+
