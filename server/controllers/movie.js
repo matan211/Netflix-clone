@@ -6,10 +6,10 @@ const Category = require('../models/category');
 const createMovie = async (req, res) => {
     try {
       // Destructure movie details from the request body
-      const { name, year, director, genre, rating, description, poster, trailer, length, ageRestriction } = req.body;
+      const { name, year, director, genre, rating, description, poster, trailer, length, ageRestriction, filename } = req.body;
   
       // Validate that the required fields are provided
-      if (!name || !genre) {
+      if (!name || !genre || !filename) {
         return res.status(400).json({ message: 'Movie name and genre are required.' }); // 400 Bad Request
       }
   
@@ -24,7 +24,8 @@ const createMovie = async (req, res) => {
         poster,
         trailer,
         length,
-        ageRestriction
+        ageRestriction,
+        filename
       );
   
       if (!newMovie) {

@@ -6,10 +6,11 @@ const net = require('net');
 const address = process.env.DOCKER_ENV === 'true' ? 'cpp_server' : '127.0.0.1';
 
 // Function to create a new movie
-const createMovie = async (name, year, director, genre, rating, description, poster, trailer, length, ageRestriction ) => {
+const createMovie = async (name, year, director, genre, rating, description,
+    poster, trailer, length, ageRestriction, filename ) => {
     try {
         // Check if all required fields are provided
-        if (!name || !genre) {
+        if (!name || !genre || !filename) {
             return 'Missing required fields'; // Ensure the required fields are present
         }
 
@@ -24,7 +25,8 @@ const createMovie = async (name, year, director, genre, rating, description, pos
             poster: poster,
             trailer: trailer,
             length: length,
-            ageRestriction: ageRestriction
+            ageRestriction: ageRestriction,
+            filename: filename
         });
         await movie.save();
         return 'success';

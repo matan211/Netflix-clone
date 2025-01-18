@@ -7,7 +7,7 @@ function ManagementScreen() {
   const { token } = useAuth();
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [newMovie, setNewMovie] = useState({ title: '', category: '', videoUrl: '' });
+  const [newMovie, setNewMovie] = useState({ name: '', genre: '',filename: '' });
   const [newCategory, setNewCategory] = useState('');
 
   useEffect(() => {
@@ -20,6 +20,11 @@ function ManagementScreen() {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
+      },
+      data: {
+        name: newMovie.name,
+        genre: newMovie.genre,
+        filename: newMovie.filename
       }
     }).then(response => {
       setMovies([...movies, response.data]);
@@ -75,26 +80,28 @@ function ManagementScreen() {
           ))}
         </div>
         <div>
-          <h3>Add New Movie</h3>
-          <input
-            type="text"
-            placeholder="Title"
-            value={newMovie.title}
-            onChange={e => setNewMovie({ ...newMovie, title: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Category"
-            value={newMovie.category}
-            onChange={e => setNewMovie({ ...newMovie, category: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Video URL"
-            value={newMovie.videoUrl}
-            onChange={e => setNewMovie({ ...newMovie, videoUrl: e.target.value })}
-          />
-          <button onClick={handleAddMovie}>Add Movie</button>
+          <form onSubmit={handleAddMovie}> 
+            <h3>Add New Movie</h3>
+            <input
+              type="text"
+              placeholder="Title"
+              value={newMovie.name}
+              onChange={e => setNewMovie({ ...newMovie, name: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Genre"
+              value={newMovie.genre}
+              onChange={e => setNewMovie({ ...newMovie, genre: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="File name"
+              value={newMovie.filename}
+              onChange={e => setNewMovie({ ...newMovie, filename: e.target.value })}
+            />
+            <button type="submit">Add Movie</button>
+          </form>
         </div>
       </section>
     </div>
