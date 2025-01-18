@@ -13,10 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 // This is the Sign Up screen
 public class SignupActivity extends Activity {
 
+    private Button signUpButton;
+    private EditText usernameInput, emailInput, passwordInput, repeatPasswordInput;
+    private CheckBox termsCheckbox;
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -43,7 +50,7 @@ public class SignupActivity extends Activity {
         rootLayout.addView(appTitle);
 
         // Username Field
-        EditText usernameInput = new EditText(this);
+        usernameInput = new EditText(this);
         usernameInput.setHint("Username");
         usernameInput.setHintTextColor(Color.GRAY);
         usernameInput.setTextColor(Color.WHITE);
@@ -53,7 +60,7 @@ public class SignupActivity extends Activity {
         rootLayout.addView(usernameInput);
 
         // Email Field
-        EditText emailInput = new EditText(this);
+        emailInput = new EditText(this);
         emailInput.setHint("Email");
         emailInput.setHintTextColor(Color.GRAY);
         emailInput.setTextColor(Color.WHITE);
@@ -63,7 +70,7 @@ public class SignupActivity extends Activity {
         rootLayout.addView(emailInput);
 
         // Password Field
-        EditText passwordInput = new EditText(this);
+        passwordInput = new EditText(this);
         passwordInput.setHint("Password");
         passwordInput.setHintTextColor(Color.GRAY);
         passwordInput.setTextColor(Color.WHITE);
@@ -74,7 +81,7 @@ public class SignupActivity extends Activity {
         rootLayout.addView(passwordInput);
 
         // Repeat Password Field
-        EditText repeatPasswordInput = new EditText(this);
+        repeatPasswordInput = new EditText(this);
         repeatPasswordInput.setHint("Repeat Password");
         repeatPasswordInput.setHintTextColor(Color.GRAY);
         repeatPasswordInput.setTextColor(Color.WHITE);
@@ -92,13 +99,13 @@ public class SignupActivity extends Activity {
         rootLayout.addView(profilePicture);
 
         // CheckBox for agreeing to terms and conditions
-        CheckBox termsCheckbox = new CheckBox(this);
+        termsCheckbox = new CheckBox(this);
         termsCheckbox.setText("I agree to the terms and conditions of MitkademFlix");
         termsCheckbox.setTextColor(Color.WHITE);
         rootLayout.addView(termsCheckbox);
 
         // Sign Up Button
-        Button signUpButton = new Button(this);
+        signUpButton = new Button(this);
         signUpButton.setText("Sign Up");
         signUpButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         signUpButton.setBackgroundColor(Color.parseColor("#E50914"));
@@ -130,6 +137,9 @@ public class SignupActivity extends Activity {
 
         // Set the content view
         setContentView(R.layout.activity_signupactivity);
+
+        //Registration request management
+        sendSignUpRequest();
     }
 
     @Override
@@ -139,5 +149,42 @@ public class SignupActivity extends Activity {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
+    }
+
+    private void sendSignUpRequest() {
+        new Thread(() -> {
+            try {
+                String username = usernameInput.getText().toString();
+                String firstName = username.contains(" ") ? username.substring(0, username.indexOf(" ")) : username;
+                String lastName = username.contains(" ") ? username.substring(username.indexOf(" ") + 1) : username;
+                String email = emailInput.getText().toString();
+                String password = passwordInput.getText().toString();
+
+                URL url = new URL("http://localhost:8080");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setDoOutput(true);
+
+                String jsonInput = String.format("{\"firstName\":\"%s\",\"lastName\":\"%s\",\"email\":\"%s\",\"password\":\"%s\"}",
+                        firstName, lastName, email, password);
+
+                OutputStream os = connection.getOutputStream();
+                os.write(jsonInput.getBytes());
+                os.flush();
+                os.close();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    runOnUiThread(() -> Toast.makeText(SignupActivity.this, "Sign Up Successful!", Toast.LENGTH_SHORT).show());
+                } else {
+                    runOnUiThread(() -> Toast.makeText(SignupActivity.this, "Sign Up Failed!", Toast.LENGTH_SHORT).show());
+                }
+
+                connection.disconnect();
+            } catch (Exception e) {
+                runOnUiThread(() -> Toast.makeText(SignupActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        }).start();
     }
 }

@@ -99,6 +99,9 @@ public class MainActivity extends Activity {
 
         // Set the layout as the content view
         setContentView(R.layout.activity_loginactivity);
+
+        // Call the method to set up the button
+        setSignupButton();
     }
 
     @Override
@@ -108,5 +111,17 @@ public class MainActivity extends Activity {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
+    }
+
+    private void setSignupButton() {
+        // Find the button by its ID
+        Button signupButton = findViewById(R.id.signupButton);
+
+        // Set an OnClickListener for the button
+        signupButton.setOnClickListener(v -> {
+            // Create an Intent to navigate to SignupActivity
+            Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+            startActivity(intent); // Start the new activity
+        });
     }
 }
