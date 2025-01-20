@@ -5,8 +5,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const [userId, setUserId] = useState(localStorage.getItem('userId') || null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,12 +27,13 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ mail: email, password }),
       });
 
-      if(response.status === 401) {
-        alert("Invalid email or password");
-      } else {
-        if (!response.ok) {
-          throw new Error('Login failed');
-        }
+      if (response.status === 401) {
+        alert('Invalid email or password');
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Login failed');
       }
 
       const data = await response.json();
@@ -40,7 +41,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('userId', data.user._id);
       setToken(data.token);
       setUserId(data.user._id);
-      console.log(data.token, data.user._id);
       setIsAuthenticated(true);
       navigate('/');
     } catch (error) {

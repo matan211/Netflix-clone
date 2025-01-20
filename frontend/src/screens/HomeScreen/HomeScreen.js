@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../../components/NavBar'; // Import the NavBar component
+  import NavBar from '../../components/NavBar'; // Import the NavBar component
 import { useAuth } from '../../context/AuthContext'; // Import the AuthContext
 import './HomeScreen.css'; // Import the CSS file
 

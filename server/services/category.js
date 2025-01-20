@@ -64,6 +64,7 @@ const updateCategory = async (id, name) => {
 
 const deleteCategory = async (id) => {
     try {
+        console.log(id);
         const category = await CategorySchema.findByIdAndDelete(id);
         if (!category) {
             throw new Error('Category not found');

@@ -3,12 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, token } = useAuth();
 
-  // This line redirects to login page if user not authenticated
-  // return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" />;
-
-  return <Component {...rest}/>
+  // Check if the token exists and the user is authenticated
+  return token && isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './MovieScreen.css';
+import axios from 'axios';
 
 const MovieScreen = () => {
   const { id } = useParams();
@@ -33,6 +34,23 @@ const MovieScreen = () => {
         const data = await response.json();
         setMovie(data);
 
+        // Add movie to user in recommendation system
+        axios.post(`http://localhost:8080/movies/${id}/recommend`, 
+          { userId: userId }, // This is the data payload
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            }
+          }
+        )
+        .then(response => {
+          console.log('Recommendation added successfully', response);
+        })
+        .catch(error => {
+          console.error('Error adding recommendation', error);
+        });        
+
         const responseRecommended = await fetch(`http://localhost:8080/movies/${id}/recommend?userId=${userId}`, {
           method: 'GET',
           headers: {
@@ -41,32 +59,36 @@ const MovieScreen = () => {
           },
         });
 
-        if (!responseRecommended.ok) {
+        if (!responseRecommended.ok && !responseRecommended.status === 404) {
           throw new Error(`HTTP error! status: ${responseRecommended.status}`);
         }
 
         const dataRecommended = await responseRecommended.text();
         const recommendedMovieIds = dataRecommended.slice(1, -1).split(' ');
 
-        const recommendedMoviesDetails = await Promise.all(
-          recommendedMovieIds.map(async (movieId) => {
-            const response = await fetch(`http://localhost:8080/movies/${movieId}`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-              },
-            });
+        // There are recommended movies
+        if(responseRecommended.ok) {
+          const recommendedMoviesDetails = await Promise.all(
+            recommendedMovieIds.map(async (movieId) => {
+              const response = await fetch(`http://localhost:8080/movies/${movieId}`, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+              });
 
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
 
-            return response.json();
-          })
-        );
+              return response.json();
+            })
+          );
 
-        setRecommendedMovies(recommendedMoviesDetails);
+          setRecommendedMovies(recommendedMoviesDetails);
+        }
+
       } catch (error) {
         console.error('Error fetching movie details:', error);
         setError(error.message);

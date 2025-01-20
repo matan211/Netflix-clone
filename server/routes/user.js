@@ -11,7 +11,7 @@ router.route('/:id')
     .get(userController.getUser)
     // .delete(userController.isLoggedIn, userController.deleteUser);
 
-router.route(':/id/:movieId')
+router.route(':/userId/:movieId')
     .post(userController.addMovieToUser)
     .delete(userController.removeMovieFromUser);
 
