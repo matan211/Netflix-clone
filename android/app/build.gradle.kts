@@ -32,11 +32,17 @@ android {
 }
 
 dependencies {
+    // OkHttp for HTTP requests
+    implementation(libs.okhttp)
+
+    // Gson for JSON parsing
+    implementation(libs.gson)
 
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.cronet.embedded)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
