@@ -6,7 +6,6 @@ cpp_server/output.exe
 /server/package-lock.json
 /server/package.json
 c_cpp_properties.json
-/server/config/
 node_modules
 package-lock.json
 package.json

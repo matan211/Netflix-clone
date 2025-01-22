@@ -17,8 +17,20 @@ function ManagementScreen() {
   const [editCategoryId, setEditCategoryId] = useState(null); // Track the category being edited
 
   useEffect(() => {
-    axios.get('http://localhost:8080/movies/all').then(response => setMovies(response.data));
-    axios.get('http://localhost:8080/categories').then(response => setCategories(response.data));
+    const fetchData = async () => {
+      try {
+        const moviesResponse = await axios.get('http://localhost:8080/movies/all');
+        setMovies(moviesResponse.data);
+  
+        const categoriesResponse = await axios.get('http://localhost:8080/categories');
+        setCategories(categoriesResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle the error appropriately, e.g., show an error message to the user
+      }
+    };
+  
+    fetchData();
   }, []);
 
   const handleDeleteCategory = (id) => {
