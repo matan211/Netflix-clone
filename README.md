@@ -11,9 +11,6 @@ for the newtwork server:
 one terminal:
 go to server folder and then type npm start
 
-second terminal:
-for the commands like curl -i http://localhost:3000/api/categories
-
 Server(on cpp_server folder):
 g++ -c src/ConsoleMenu.cpp -o ConsoleMenu.o
 g++ -c src/DisplayRecommendedMoviesCommand.cpp -o DisplayRecommendedMoviesCommand.o
@@ -35,8 +32,12 @@ Run NodeJS:
 6. Write in .env.local: CONNECTION_STRING="mongodb://localhost:27017/Netflix_database"
 PORT=8080 
 7. Run server on 'server' folder: npm start
-8. Run user in new terminal with '\' before ' " ', e.g., curl.exe -i -X POST http://localhost:8080/movies/ -H "Content-Type: application/json" -d '{\"name\":\"The Dark knight\", \"genre\":\"Action\"}' 
+
+Run the app(locally):
+1. cd frontend
+2. npm start
 
 Run on Docker:
-on root folder: docker-compose up --build
-Run Client on seperate Terminal.
+1. On root folder do the command:
+  docker-compose up
+2. open browser in http://localhost:3000/

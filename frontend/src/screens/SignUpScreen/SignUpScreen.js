@@ -10,16 +10,16 @@ const SignUpScreen = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    // // Password validation
-    // if (formData.password !== formData.repeatPassword) {
-    //   setError('Passwords do not match');
-    //   return;
-    // }
+    // Password validation
+    if (formData.password !== formData.repeatPassword) {
+      setError('Passwords do not match');
+      return;
+    }
 
-    // if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(formData.password)) {
-    //   setError('Password must be at least 8 characters long and include both letters and numbers');
-    //   return;
-    // }
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(formData.password)) {
+      setError('Password must be at least 8 characters long and include both letters and numbers');
+      return;
+    }
 
     console.log({firstName: formData.firstName, lastName: formData.lastName, mail: formData.mail,
       password: formData.password, profilePic: formData.profileImage.name
