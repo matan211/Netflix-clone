@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,8 +40,10 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.user._id);
+      localStorage.setItem('isAdmin', data.user.isAdmin);
       setToken(data.token);
       setUserId(data.user._id);
+      setIsAdmin(data.user.isAdmin);
       setIsAuthenticated(true);
       navigate('/');
     } catch (error) {
@@ -51,6 +54,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('isAdmin');
     setToken(null);
     setUserId(null);
     setIsAuthenticated(false);
@@ -58,7 +62,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, userId }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, userId, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

@@ -106,8 +106,7 @@ function HomeScreen() {
           <div className="banner-contents">
             <h1 className="banner-title">{randomMovie.name}</h1>
             <div className="banner-buttons">
-              <button className="banner-button">Play</button>
-              <button className="banner-button">My List</button>
+              <button className="banner-button" onClick={() => handlePlayClick(randomMovie._id)}>Play</button>
             </div>
             <p className="banner-description">{randomMovie.description}</p>
           </div>

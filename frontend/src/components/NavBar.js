@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext'; // Import the AuthContext
 
 const NavBar = ({ onSearch }) => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, isAdmin } = useAuth();
   const [isBubbleVisible, setIsBubbleVisible] = useState(false);
 
   const handleLogoClick = () => {
@@ -19,10 +19,9 @@ const NavBar = ({ onSearch }) => {
     navigate('/login');
   };
 
-  // Click on admiin page
   const handleAdmin = () => {
     navigate('/admin');
-  }
+  };
 
   const handleMouseEnter = () => {
     setIsBubbleVisible(true);
@@ -43,7 +42,8 @@ const NavBar = ({ onSearch }) => {
         onClick={handleLogoClick}
       />
       <Search onSearch={onSearch} /> {/* Include the Search component */}
-      <button className='admin-button' onClick={() => handleAdmin()}>Admin page</button>
+      {console.log(isAdmin)}
+      {isAdmin && <button className='admin-button' onClick={handleAdmin}>Admin page</button>}
       <div
         className="nav-avatar-container"
         onMouseEnter={handleMouseEnter}

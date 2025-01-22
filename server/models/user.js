@@ -45,7 +45,11 @@ const UserSchema = new Schema({
         default: Date.now
       }
     }
-  ]
+  ],
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 });
 
 // Pre-save hook to handle _id assignment

@@ -38,6 +38,7 @@ async function login(req, res) {
         firstName: user.firstName,
         lastName: user.lastName,
         profilePic: user.profilePic,
+        isAdmin: user.isAdmin 
       },
     });
   } catch (error) {
