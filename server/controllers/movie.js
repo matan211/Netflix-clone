@@ -105,8 +105,8 @@ const getMoviesByCategories = async (req, res) => {
 const updateMovie = async (req, res) => {
     try {
         const result = await movieService.updateMovie(req.params.id, req.body);
-        if (result && result === 'success') {
-            return res.status(200).send("Movie updated successfully");
+        if (result) {
+            return res.status(200).json(result);
         } else {
             return res.status(404).send("Movie not found");
         }

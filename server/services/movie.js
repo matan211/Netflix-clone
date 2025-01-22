@@ -29,7 +29,7 @@ const createMovie = async (name, year, director, genre, rating, description,
             filename: filename
         });
         await movie.save();
-        return 'success';
+        return movie;
     } catch (error) {
         console.log("Error creating movie: " + error);
         return null;
@@ -160,7 +160,7 @@ const updateMovie = async (id, updateData) => {
         if (!movie) {
             throw new Error('Movie not found'); // Handle case where movie is not found
         }
-        return 'success';
+        return movie;
     } catch (error) {
         console.log("Error updating movie: " + error);
         return null;
