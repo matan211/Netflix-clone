@@ -4,10 +4,13 @@ import './NavBar.css'; // Import the CSS file
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome CSS
 import Search from './Search'; // Import the Search component
 import { useAuth } from '../context/AuthContext'; // Import the AuthContext
+  import { useTheme } from '../context/ThemeContext'; // Import the ThemeContext
+import ToggleSwitch from './ToggleSwitch'; // Import the ToggleSwitch component
 
 const NavBar = ({ onSearch }) => {
   const navigate = useNavigate();
   const { logout, isAdmin } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [isBubbleVisible, setIsBubbleVisible] = useState(false);
 
   const handleLogoClick = () => {
@@ -34,7 +37,7 @@ const NavBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="nav-bar">
+    <div className={`nav-bar ${theme}`}>
       <img
         className="nav-logo"
         src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
@@ -42,8 +45,8 @@ const NavBar = ({ onSearch }) => {
         onClick={handleLogoClick}
       />
       <Search onSearch={onSearch} /> {/* Include the Search component */}
-      {console.log(isAdmin)}
       {isAdmin && <button className='admin-button' onClick={handleAdmin}>Admin page</button>}
+      <ToggleSwitch isOn={theme === 'dark'} handleToggle={toggleTheme} />
       <div
         className="nav-avatar-container"
         onMouseEnter={handleMouseEnter}

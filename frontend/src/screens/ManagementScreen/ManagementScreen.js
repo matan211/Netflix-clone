@@ -4,28 +4,37 @@ import { useAuth } from '../../context/AuthContext';
 import './ManagementScreen.css';
 import NavBar from '../../components/NavBar'; // Import the NavBar component
 
+const defaultPoster = 'https://cdn.pixabay.com/photo/2022/08/24/20/20/netflix-7408710_1280.png';
+const defaultTrailer = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+
 function ManagementScreen() {
   const { token } = useAuth();
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [newMovie, setNewMovie] = useState({
     name: '', year: 2025, director: '', genre: '', rating: '', description: '',
-    poster: '', trailer: '', filename: ''
+    poster: defaultPoster, trailer: defaultTrailer, filename: ''
   });
   const [newCategory, setNewCategory] = useState({ name: '', promoted: 'true' });
   const [editMovieId, setEditMovieId] = useState(null); // Track the movie being edited
   const [editCategoryId, setEditCategoryId] = useState(null); // Track the category being edited
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const moviesResponse = await axios.get('http://localhost:8080/movies/all');
         setMovies(moviesResponse.data);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+        // Handle the error appropriately, e.g., show an error message to the user
+      }
   
+      try {
         const categoriesResponse = await axios.get('http://localhost:8080/categories');
         setCategories(categoriesResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching categories:', error);
         // Handle the error appropriately, e.g., show an error message to the user
       }
     };
@@ -40,8 +49,8 @@ function ManagementScreen() {
         'Authorization': `Bearer ${token}`,
       }
     }).then(() => {
-      console.log(categories)
       setCategories(categories.filter(category => category._id !== id));
+      alert('Delete successfully');
     });
   }
   
@@ -56,7 +65,8 @@ function ManagementScreen() {
             'Authorization': `Bearer ${token}`,
           }
         }).then(response => {
-          console.log(response);
+          uploadVideo();
+          alert('Edited successfully');
           setMovies(movies.map(movie => movie._id === editMovieId ? response.data : movie));
           setEditMovieId(null);
           resetNewMovieForm();
@@ -69,12 +79,12 @@ function ManagementScreen() {
             'Authorization': `Bearer ${token}`,
           }
         });
-          console.log(response);
+          await uploadVideo();
+          alert('Added successfully');
           setMovies([...movies, response.data.movie]);
           resetNewMovieForm();
       }
     } catch(error) {
-      console.error('Error adding or editing movie:', error);
       alert('name, genre and File name are required');
     }
   };
@@ -86,6 +96,7 @@ function ManagementScreen() {
         'Authorization': `Bearer ${token}`,
       }
     }).then(() => {
+      alert('Delete successfully');
       setMovies(movies.filter(movie => movie._id !== id));
     });
   };
@@ -101,6 +112,7 @@ function ManagementScreen() {
             'Authorization': `Bearer ${token}`,
           }
         });
+        alert('Edited successfully');
         setCategories(categories.map(category => category._id === editCategoryId ? response.data.updatedCategory : category));
         setEditCategoryId(null);
         resetNewCategoryForm();
@@ -112,17 +124,17 @@ function ManagementScreen() {
             'Authorization': `Bearer ${token}`,
           }
         });
+        alert('Edited successfully');
         setCategories([...categories, response.data]);
         resetNewCategoryForm();
       }
     } catch (error) {
-      console.error('Error adding or editing category:', error);
+      alert('Added successfully');
       alert("Error editing/adding movie");
     }
   };
 
   const handleEditMovie = (movie) => {
-    console.log(movie)
     setNewMovie(movie);
     setEditMovieId(movie._id);
   };
@@ -135,12 +147,35 @@ function ManagementScreen() {
   const resetNewMovieForm = () => {
     setNewMovie({
       name: '', year: 2025, director: '', genre: '', rating: '', description: '',
-      poster: '', trailer: '', filename: ''
+      poster: defaultPoster, trailer: defaultTrailer, filename: ''
     });
   };
 
   const resetNewCategoryForm = () => {
     setNewCategory({ name: '', promoted: 'true' });
+  };
+
+  const uploadVideo = async () => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('filename', newMovie.filename);
+
+    try {
+      const response = await axios.post('http://localhost:8080/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setNewMovie({ ...newMovie, filename: selectedFile.name });
   };
 
   return (
@@ -153,6 +188,7 @@ function ManagementScreen() {
         <section>
           <h2>Categories</h2>
           <div className="category-list">
+            {console.log(categories)}
             {categories.map(category => (
               <div key={category._id} className="category-item">
                 <p>{category.name}</p>
@@ -210,10 +246,8 @@ function ManagementScreen() {
                 onChange={e => setNewMovie({ ...newMovie, genre: e.target.value })}
               />
               <input
-                type="text"
-                placeholder="File name"
-                value={newMovie.filename}
-                onChange={e => setNewMovie({ ...newMovie, filename: e.target.value })}
+                type="file"
+                onChange={handleFileChange}
               />
               <label htmlFor="year-dropdown">
                 Year Released:
@@ -247,13 +281,13 @@ function ManagementScreen() {
               />
               <input
                 type="text"
-                placeholder="Poster"
+                placeholder="Poster URL"
                 value={newMovie.poster}
                 onChange={e => setNewMovie({ ...newMovie, poster: e.target.value })}
               />
               <input
                 type="text"
-                placeholder="Trailer"
+                placeholder="Trailer - YouTube URL"
                 value={newMovie.trailer}
                 onChange={e => setNewMovie({ ...newMovie, trailer: e.target.value })}
               />

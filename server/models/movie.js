@@ -39,7 +39,7 @@ const MovieSchema = new Schema({
   poster: {
     // URL of the movie poster
     type: String, 
-    default: '' 
+    default: 'https://cdn.pixabay.com/photo/2022/08/24/20/20/netflix-7408710_1280.png' 
   },
   trailer: {
     // URL of the movie trailer

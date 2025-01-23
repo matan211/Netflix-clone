@@ -9,6 +9,7 @@ const users = require('./routes/user');
 const category = require('./routes/category');
 const movie = require('./routes/movie');
 const token = require('./routes/token');
+const uploadRouter = require('./routes/upload');
 require('custom-env').env(process.env.NODE_ENV, './config');
 mongoose.connect(process.env.CONNECTION_STRING);
 
@@ -20,9 +21,8 @@ app.use('/categories', category);
 app.use('/movies', movie);
 app.use('/tokens', token);
 
-// Serve static files from the React app
-app.use(express.static(path.resolve(__dirname, '../build')));
-app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/upload', uploadRouter);
 
 // Add video streaming route
 app.get('/video/:filename', (req, res) => {
