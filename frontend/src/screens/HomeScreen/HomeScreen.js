@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-  import NavBar from '../../components/NavBar'; // Import the NavBar component
+import NavBar from '../../components/NavBar'; // Import the NavBar component
 import { useAuth } from '../../context/AuthContext'; // Import the AuthContext
 import './HomeScreen.css'; // Import the CSS file
 
@@ -39,15 +39,23 @@ function HomeScreen() {
       },
     })
       .then(response => {
+        if (response.status === 404) {
+          setSearchMessage('No movies found.');
+          setCategories({});
+          setRandomMovie(null);
+          return null; // Return null to stop further processing
+        }
         if (response.ok) {
           return response.json();
         }
-        
+        throw new Error('Network response was not ok.');
       })
       .then(data => {
-        setCategories(data);
-        const allMovies = Object.values(data).flat();
-        setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
+        if (data) {
+          setCategories(data);
+          const allMovies = Object.values(data).flat();
+          setRandomMovie(allMovies[Math.floor(Math.random() * allMovies.length)]);
+        }
       })
       .catch(error => {
         console.error('Error fetching movies:', error);
@@ -108,7 +116,6 @@ function HomeScreen() {
             <div className="banner-buttons">
               <button className="banner-button" onClick={() => handlePlayClick(randomMovie._id)}>Play</button>
             </div>
-            <p className="banner-description">{randomMovie.description}</p>
           </div>
         </div>
       )}
@@ -126,7 +133,7 @@ function HomeScreen() {
                     onClick={() => handleThumbnailClick(movie)}
                   >
                     <img
-                      src={`https://img.youtube.com/vi/${movie.trailer.split('v=')[1]}/0.jpg`}
+                      src={`${movie.poster}`}
                       alt={`${movie.name} thumbnail`}
                       className="thumbnail"
                     />

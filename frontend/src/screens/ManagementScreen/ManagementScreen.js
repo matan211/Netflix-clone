@@ -29,7 +29,7 @@ function ManagementScreen() {
         console.error('Error fetching movies:', error);
         // Handle the error appropriately, e.g., show an error message to the user
       }
-  
+
       try {
         const categoriesResponse = await axios.get('http://localhost:8080/categories');
         setCategories(categoriesResponse.data);
@@ -38,7 +38,7 @@ function ManagementScreen() {
         // Handle the error appropriately, e.g., show an error message to the user
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -53,10 +53,10 @@ function ManagementScreen() {
       alert('Delete successfully');
     });
   }
-  
+
   const handleAddOrEditMovie = async (e) => {
     e.preventDefault();
-    try{
+    try {
       if (editMovieId) {
         // Update existing movie
         axios.put(`http://localhost:8080/movies/${editMovieId}`, newMovie, {
@@ -79,12 +79,12 @@ function ManagementScreen() {
             'Authorization': `Bearer ${token}`,
           }
         });
-          await uploadVideo();
-          alert('Added successfully');
-          setMovies([...movies, response.data.movie]);
-          resetNewMovieForm();
+        await uploadVideo();
+        alert('Added successfully');
+        setMovies([...movies, response.data.movie]);
+        resetNewMovieForm();
       }
-    } catch(error) {
+    } catch (error) {
       alert('name, genre and File name are required');
     }
   };
@@ -253,7 +253,7 @@ function ManagementScreen() {
                 Year Released:
                 <select name="year-dropdown">
                   {Array.from({ length: 2025 - 1900 + 1 }, (_, index) => {
-                    const year = 1900 + index;
+                    const year = 2025 - index; // Start from 2025
                     return <option key={year} value={year}>{year}</option>;
                   })}
                 </select>
@@ -268,7 +268,7 @@ function ManagementScreen() {
                 Rating:
                 <select name="rating-dropdown">
                   {Array.from({ length: 10 - 1 + 1 }, (_, index) => {
-                    const rating = 1 + index;
+                    const rating = 10 - index; // Start from 10
                     return <option key={rating} value={rating}>{rating}</option>;
                   })}
                 </select>
