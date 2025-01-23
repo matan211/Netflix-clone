@@ -2,12 +2,10 @@ package com.example.app1;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
-import android.util.TypedValue;
+import android.util.*;
 import android.view.View;
 import android.widget.*;
 
@@ -44,9 +42,15 @@ public class MainActivity extends Activity {
             String username = usernameInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
 
-            // Validate input
+            // Validate input message
             if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+                if (username.isEmpty() && password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+                } else if (username.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter username", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
 
@@ -62,6 +66,7 @@ public class MainActivity extends Activity {
                         if (response.contains("login success")) {
                             Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            onDestroy();
                             startActivity(intent);
                         } else {
                             Toast.makeText(MainActivity.this, "Invalid username or password!", Toast.LENGTH_SHORT).show();

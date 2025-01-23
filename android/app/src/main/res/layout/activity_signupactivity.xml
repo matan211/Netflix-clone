@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -59,7 +58,7 @@
         />
 
     <EditText
-        android:id="@+id/passwordInput"
+        android:id="@+id/repeatPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -69,8 +68,16 @@
         android:padding="3dp"
         android:textSize="28sp"
         android:textColor="#F6F6F6"
-        android:textColorHint="#FFFDFD"
-        tools:ignore="DuplicateIds" />
+        android:textColorHint="#FFFDFD" />
+
+    <LinearLayout
+        android:id="@+id/layoutForImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center">
+    </LinearLayout>
 
     <Button
         android:id="@+id/addPictureButton"
