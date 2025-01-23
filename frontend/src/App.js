@@ -15,10 +15,10 @@ function App() {
         <ThemeProvider>
           <Routes>
             <Route path="/login" element={<LoginScreen />} />
-            <Route path='/signup' element={<ProtectedRoute element={SignUpScreen} />} />
+            <Route path="/signup" element={<SignUpScreen />} /> {/* Allow access without authentication */}
             <Route path="/" element={<ProtectedRoute element={HomeScreen} />} />
             <Route path="/movies/:id" element={<ProtectedRoute element={MovieScreen} />} />
-            <Route path='/admin' element={<ProtectedRoute element={ManagementScreen} />} />
+            <Route path="/admin" element={<ProtectedRoute element={ManagementScreen} />} />
             {/* other routes */}
           </Routes>
         </ThemeProvider>

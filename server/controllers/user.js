@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
 
 // Get a user by ID
 const getUser = async (req, res) => {
-    const user = await userService.findById(req.params.id);
+    const user = await userService.findUserById(req.params.id);
     if (!user) {
         return res.status(404).send("User not found"); // 404 Not Found
     }

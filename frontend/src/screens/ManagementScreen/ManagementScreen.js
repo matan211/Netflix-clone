@@ -161,7 +161,7 @@ function ManagementScreen() {
     formData.append('filename', newMovie.filename);
 
     try {
-      const response = await axios.post('http://localhost:8080/upload', formData, {
+      const response = await axios.post('http://localhost:8080/upload/video', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

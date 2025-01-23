@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './SignUpScreen.css';
 
 const SignUpScreen = () => {
@@ -9,7 +10,7 @@ const SignUpScreen = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     // Password validation
     if (formData.password !== formData.repeatPassword) {
       setError('Passwords do not match');
@@ -21,31 +22,50 @@ const SignUpScreen = () => {
       return;
     }
 
-    console.log({firstName: formData.firstName, lastName: formData.lastName, mail: formData.mail,
-      password: formData.password, profilePic: formData.profileImage.name
-    })
+    let profilePicUrl = 'https://www.gravatar.com/avatar/?d=mp'; // Default profile picture URL
+
+    if (formData.profileImage) {
+      try {
+        // Upload profile image
+        const formDataToSend = new FormData();
+        formDataToSend.append('file', formData.profileImage);
+        formDataToSend.append('filename', formData.profileImage.name);
+
+        const uploadResponse = await axios.post('http://localhost:8080/upload/profilepic', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        profilePicUrl = formData.profileImage.name; // Use the uploaded image name
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+      }
+    }
+
     try {
+      // Create user
       const response = await fetch('http://localhost:8080/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({firstName: formData.firstName, lastName: formData.lastName, mail: formData.mail,
-          password: formData.password, profilePic: formData.profileImage.name 
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          mail: formData.mail,
+          password: formData.password,
+          profilePic: profilePicUrl,
         }),
       });
 
-      if(response.status === 400) {
-        alert('Email aleady exists');
-        setFormData({...formData, mail:'', password: '', repeatPassword: ''});
+      if (response.status === 400) {
+        alert('Email already exists');
+        setFormData({ ...formData, mail: '', password: '', repeatPassword: '' });
+      } else if (!response.ok) {
+        alert('Sign-up failed');
       } else {
-        if (!response.ok) {
-          alert('Sign-up failed');
-        }  
-      }
-
-      if(response.ok) {
         navigate('/login'); // Redirect to login or another page after successful sign-up
       }
-      } catch (error) {
+    } catch (error) {
       setError(error.message);
     }
   };
@@ -92,7 +112,7 @@ const SignUpScreen = () => {
           name="repeatPassword"
           placeholder="Repeat Password"
           value={formData.repeatPassword}
-          onChange={(e) => setFormData({ ...formData, repeatPassword  : e.target.value })}
+          onChange={(e) => setFormData({ ...formData, repeatPassword: e.target.value })}
           required
         />
         <input

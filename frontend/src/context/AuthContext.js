@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
+  const [email, setEmail] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      setEmail(email);
       const response = await fetch('http://localhost:8080/tokens', {
         method: 'POST',
         headers: {
@@ -62,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, userId, isAdmin }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, userId, isAdmin, email }}>
       {children}
     </AuthContext.Provider>
   );
